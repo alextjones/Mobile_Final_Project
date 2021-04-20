@@ -1,7 +1,5 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
-
 import 'common/thin_button.dart';
 
 void main() {
@@ -15,58 +13,53 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Fretless',
       theme: ThemeData(
-
         primarySwatch: Colors.blue,
-
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: LevelSelectionPage(title: 'Scales'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class LevelSelectionPage extends StatefulWidget {
+  LevelSelectionPage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _LevelSelectionPageState createState() => _LevelSelectionPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+class _LevelSelectionPageState extends State<LevelSelectionPage> {
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(
-
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ThinButton(
-              onThinButtonPressed: () => log("pressed"),
-              child: Text("E flat major scale"),
+      body: ListView(
+        children: <Widget>[
+          SizedBox(height: 40.0,),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget> [
+                Container(
+                  height: 50.0,
+                  width: 50.0,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/person_placeholder.png'),
+                    ),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          )
+        ]
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      )
     );
   }
 }
