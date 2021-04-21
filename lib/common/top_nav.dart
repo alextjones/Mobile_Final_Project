@@ -33,7 +33,10 @@ class _TopNavState extends State<TopNav> {
               Visibility(
                 visible: widget.includeBackButton,
                 child: IconButton(
-                  icon: Icon(Icons.chevron_left_rounded),
+                  icon: Icon(
+                      Icons.chevron_left_rounded,
+                    size: 30.0,
+                  ),
                   onPressed: () { Navigator.pop(context); },
                 ),
               ),
