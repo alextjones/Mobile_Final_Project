@@ -177,7 +177,7 @@ class MainSelectionPage extends StatelessWidget {
                       height:20,
                     ),
                     RaisedButton(
-                        child: Text('Tunes'),
+                        child: Text('Tuner'),
                         padding: EdgeInsets.fromLTRB(89, 40, 89, 40),
                         color: Colors.blueAccent,
                         onPressed: () {
@@ -242,6 +242,10 @@ class ActivitySelectionPage extends StatelessWidget {
                         color: Colors.blueAccent,
                         onPressed: () {
                           log("Pressed Scales button (SelectPage)");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => LevelSelectionPage(title: "Scales")),
+                          );
                         }
                     ),
                     SizedBox(
