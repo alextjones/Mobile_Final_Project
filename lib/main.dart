@@ -146,9 +146,12 @@ class MainSelectionPage extends StatelessWidget {
             children: <Widget>
             [
 
-              LevelTitle(
-                title: 'Welcome to Fretless!',
-                isUnlocked: true,
+              Text(
+                "Welcome to Fretless!",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 30,
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(left: 10.0),
@@ -203,9 +206,12 @@ class ActivitySelectionPage extends StatelessWidget {
             children: <Widget>
             [
 
-              LevelTitle(
-                title: 'Warm Up',
-                isUnlocked: true,
+              Text(
+                "Warm Up",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 30,
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(left: 10.0),
