@@ -1,10 +1,15 @@
 import 'dart:developer';
+import 'package:flutter/services.dart';
+import 'package:audioplayer/audioplayer.dart';
+import 'dart:typed_data';
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'common/level_title.dart';
-import 'common/recorder_view.dart';
-import 'common/recording_player.dart';
 import 'common/thin_button.dart';
 import 'common/top_nav.dart';
+import 'dart:io';
 
 void main() {
   runApp(MyApp());
@@ -21,7 +26,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         disabledColor: Colors.black12,
       ),
-      home: WarmUpPage(warmUp: 'e_minor_pentatonic', title: 'E Minor Pentatonic', bpm:65), //this is just to display for hot reload, home page will be changed,
+      home: LevelSelectionPage(title: "Scales"), //this is just to display for hot reload, home page will be changed,
       debugShowCheckedModeBanner: false,
     );
   }
@@ -76,19 +81,28 @@ class _LevelSelectionPageState extends State<LevelSelectionPage> {
                     ThinButton(
                         text: 'E minor pentatonic',
                         onThinButtonPressed: () {
-                          log("Pressed level 1 part 1");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => WarmUpPage(warmUp: 'e_minor_pentatonic', title: 'E Minor Pentatonic', bpm:65))
+                          );
                         }
                     ),
                     ThinButton(
                         text: 'A minor pentatonic',
                         onThinButtonPressed: () {
-                          log("Pressed level 1 part 1");
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => WarmUpPage(warmUp: 'a_minor_pentatonic', title: 'A Minor Pentatonic', bpm:65))
+                          );
                         }
                     ),
                     ThinButton(
                         text: 'D minor pentatonic',
                         onThinButtonPressed: () {
-                          log("Pressed level 1 part 1");
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => WarmUpPage(warmUp: 'a_minor_pentatonic', title: 'A Minor Pentatonic', bpm:65))
+                          );
                         }
                     ),
                   ],
@@ -146,12 +160,31 @@ class WarmUpPage extends StatefulWidget {
 
 class _WarmUpPageState extends State<WarmUpPage> {
 
-  String _recordingPath;
+  AudioPlayer audioPlugin = AudioPlayer();
+  String mp3Uri;
+
+
 
   @override
   void initState() {
     super.initState();
+    _load();
+  }
 
+  Future<Null> _load() async {
+    final ByteData data = await rootBundle.load('assets/audio/' + widget.warmUp + '.mp3');
+    Directory tempDir = await getTemporaryDirectory();
+    File tempFile = File('${tempDir.path}/demo.mp3');
+    await tempFile.writeAsBytes(data.buffer.asUint8List(), flush: true);
+    mp3Uri = tempFile.uri.toString();
+    print('finished loading, uri=$mp3Uri');
+  }
+
+  void _playSound() {
+    log("In play sound");
+    if (mp3Uri != null) {
+      audioPlugin.play(mp3Uri, isLocal: true);
+    }
   }
 
   @override
@@ -191,11 +224,11 @@ class _WarmUpPageState extends State<WarmUpPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       IconButton(
-                        icon: Icon(
-                          Icons.play_circle_outline,
+                          padding: EdgeInsets.all(0),
+                          iconSize: 40,
+                          icon: Icon(Icons.play_circle_outline),
+                          onPressed: _playSound,
                         ),
-                        onPressed: () {log ("play button pressed");},
-                      ),
                       Text(
                         'Played at ' + widget.bpm.toString() + 'bpm',
                         style: TextStyle(
