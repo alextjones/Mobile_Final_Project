@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class ThinButton extends StatefulWidget {
 
-  final Widget child;
+  final String text;
   final VoidCallback onThinButtonPressed;
   final Color pressedColor;
 
   ThinButton({
     Key key,
-    @required this.child,
+    @required this.text,
     @required this.onThinButtonPressed,
     this.pressedColor,
   }) : super(key: key);
@@ -20,9 +20,7 @@ class ThinButton extends StatefulWidget {
 class _ThinButtonState extends State<ThinButton> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: EdgeInsets.all(20),
-        child: ElevatedButton(
+    return ElevatedButton(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.resolveWith<Color>(
                 (Set<MaterialState> states) {
@@ -45,11 +43,10 @@ class _ThinButtonState extends State<ThinButton> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              widget.child,
+              Text(widget.text),
               Icon(Icons.chevron_right_rounded),
             ],
           )
-      )
     );
   }
 }

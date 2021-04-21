@@ -32,7 +32,7 @@ class _LevelTitleState extends State<LevelTitle> {
           SizedBox(
             width: 10,
           ),
-          Icon(widget.isUnlocked? Icons.lock_open_rounded : Icons.lock_rounded),
+          Icon(widget.isUnlocked? Icons.lock_open_rounded : Icons.lock_outline_rounded),
         ],
       ),
     );
