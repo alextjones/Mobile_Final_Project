@@ -36,6 +36,10 @@ class LevelSelectionPage extends StatefulWidget {
 
 class _LevelSelectionPageState extends State<LevelSelectionPage> {
 
+  void goToWarmup(String warmupTitle) {
+    log("going to " + warmupTitle);
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -67,19 +71,19 @@ class _LevelSelectionPageState extends State<LevelSelectionPage> {
                 child: Column(
                   children: <Widget>[
                     ThinButton(
-                        text: 'E flat major',
+                        text: 'E minor pentatonic',
                         onThinButtonPressed: () {
                           log("Pressed level 1 part 1");
                         }
                     ),
                     ThinButton(
-                        text: 'B flat major',
+                        text: 'A minor pentatonic',
                         onThinButtonPressed: () {
                           log("Pressed level 1 part 1");
                         }
                     ),
                     ThinButton(
-                        text: 'C major',
+                        text: 'D minor pentatonic',
                         onThinButtonPressed: () {
                           log("Pressed level 1 part 1");
                         }
@@ -98,8 +102,8 @@ class _LevelSelectionPageState extends State<LevelSelectionPage> {
                     ThinButton(
                         text: 'Take the test to unlock',
                         onThinButtonPressed: () {
-                          log("Pressed level 1 part 1");
-                        }
+                          log("pressed take text");
+                        },
                     ),
                   ],
                 ),
@@ -121,6 +125,26 @@ class _LevelSelectionPageState extends State<LevelSelectionPage> {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class WarmUpPage extends StatefulWidget {
+  WarmUpPage({Key key, this.warmUp}) : super(key: key);
+
+  final String warmUp;
+
+  @override
+  _WarmUpPageState createState() => _WarmUpPageState();
+}
+
+class _WarmUpPageState extends State<WarmUpPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Text(
+          widget.warmUp,
       ),
     );
   }

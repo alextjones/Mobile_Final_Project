@@ -43,8 +43,8 @@ class _TopNavState extends State<TopNav> {
               Visibility(
                 visible: widget.includeProfilePicture,
                 child: Container(
-                  height: 50.0,
-                  width: 50.0,
+                  height: 40.0,
+                  width: 40.0,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage('assets/images/person_placeholder.png'),
