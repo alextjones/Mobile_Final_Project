@@ -72,6 +72,7 @@ class _LevelSelectionPageState extends State<LevelSelectionPage> {
                         text: 'E flat major',
                         onThinButtonPressed: () {
                           log("Pressed level 1 part 1");
+
                         }
                     ),
                     ThinButton(
@@ -157,6 +158,10 @@ class MainSelectionPage extends StatelessWidget {
                         text: 'Warm Up',
                         onThinButtonPressed: () {
                           log("Pressed Warm up button (MainPage)");
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ActivitySelectionPage()),
+                          );
                         }
                     ),
                     ThinButton(
