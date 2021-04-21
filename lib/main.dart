@@ -153,13 +153,19 @@ class MainSelectionPage extends StatelessWidget {
                   fontSize: 30,
                 ),
               ),
+              SizedBox(
+                height:20,
+              ),
               Padding(
                 padding: EdgeInsets.only(left: 10.0),
                 child: Column(
                   children: <Widget>[
-                    ThinButton(
-                        text: 'Warm Up',
-                        onThinButtonPressed: () {
+
+                    RaisedButton(
+                        child: Text('Warm Up'),
+                        padding: EdgeInsets.fromLTRB(78, 40, 78, 40),
+                        color: Colors.blueAccent,
+                        onPressed: () {
                           log("Pressed Warm up button (MainPage)");
                           Navigator.push(
                               context,
@@ -167,15 +173,25 @@ class MainSelectionPage extends StatelessWidget {
                           );
                         }
                     ),
-                    ThinButton(
-                        text: 'Tunes',
-                        onThinButtonPressed: () {
+                    SizedBox(
+                      height:20,
+                    ),
+                    RaisedButton(
+                        child: Text('Tunes'),
+                        padding: EdgeInsets.fromLTRB(89, 40, 89, 40),
+                        color: Colors.blueAccent,
+                        onPressed: () {
                           log("Pressed Tune button (MainPage)");
                         }
                     ),
-                    ThinButton(
-                        text: 'Metronome',
-                        onThinButtonPressed: () {
+                    SizedBox(
+                      height:20,
+                    ),
+                    RaisedButton(
+                        child: Text('Metronome'),
+                        padding: EdgeInsets.fromLTRB(70, 40, 70, 40),
+                        color: Colors.blueAccent,
+                        onPressed: () {
                           log("Pressed Metronome button (MainPage)");
                         }
                     ),
@@ -213,25 +229,40 @@ class ActivitySelectionPage extends StatelessWidget {
                   fontSize: 30,
                 ),
               ),
+              SizedBox(
+                height:20,
+              ),
               Padding(
                 padding: EdgeInsets.only(left: 10.0),
                 child: Column(
                   children: <Widget>[
-                    ThinButton(
-                        text: 'Scales',
-                        onThinButtonPressed: () {
+                    RaisedButton(
+                        child: Text('Scales'),
+                        padding: EdgeInsets.fromLTRB(85, 40, 85, 40),
+                        color: Colors.blueAccent,
+                        onPressed: () {
                           log("Pressed Scales button (SelectPage)");
                         }
                     ),
-                    ThinButton(
-                        text: 'Chords',
-                        onThinButtonPressed: () {
+                    SizedBox(
+                      height:20,
+                    ),
+                    RaisedButton(
+                        child: Text('Chords'),
+                        padding: EdgeInsets.fromLTRB(85, 40, 85, 40),
+                        color: Colors.blueAccent,
+                        onPressed: () {
                           log("Pressed Chord button (SelectPage)");
                         }
                     ),
-                    ThinButton(
-                        text: 'Left Handed Mode',
-                        onThinButtonPressed: () {
+                    SizedBox(
+                      height:20,
+                    ),
+                    RaisedButton(
+                        child: Text('Left Handed Mode'),
+                        padding: EdgeInsets.fromLTRB(45, 40, 45, 40),
+                        color: Colors.blueAccent,
+                        onPressed: () {
                           log("Pressed left hand mode (selectPage");
                         }
                     ),
