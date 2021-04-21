@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'common/level_title.dart';
 import 'common/thin_button.dart';
@@ -132,21 +133,50 @@ class MainSelectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text('Welcome Back User!'),
-    ),
-      body: Center(
-        child: ElevatedButton(
-          child: Text('Open another page'),
-          onPressed: (){
-            //navigate to Activity selection page
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ActivitySelectionPage()),
-            );
-          },
-        ),
+      body: Column(
+        children: <Widget>[
+          TopNav(
+            includeBackButton: false,
+            includeProfilePicture: true,
+          ),
+          ListView(
+            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 40.0),
+            shrinkWrap: true,
+            children: <Widget>
+            [
 
+              LevelTitle(
+                title: 'Welcome to Fretless!',
+                isUnlocked: true,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 10.0),
+                child: Column(
+                  children: <Widget>[
+                    ThinButton(
+                        text: 'Warm Up',
+                        onThinButtonPressed: () {
+                          log("Pressed Warm up button (MainPage)");
+                        }
+                    ),
+                    ThinButton(
+                        text: 'Tunes',
+                        onThinButtonPressed: () {
+                          log("Pressed Tune button (MainPage)");
+                        }
+                    ),
+                    ThinButton(
+                        text: 'Metronome',
+                        onThinButtonPressed: () {
+                          log("Pressed Metronome button (MainPage)");
+                        }
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -156,19 +186,51 @@ class ActivitySelectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Warm Up'),
-        ),
-        body: Center(
-            child: ElevatedButton(
-              child: Text('Go back to the first page'),
-              onPressed: (){
-                //navigate to another page
-                Navigator.pop(context);
-              },
-            )
+      body: Column(
+        children: <Widget>[
+          TopNav(
+            includeBackButton: true,
+            includeProfilePicture: true,
+          ),
+          ListView(
+            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 40.0),
+            shrinkWrap: true,
+            children: <Widget>
+            [
 
-        )
+              LevelTitle(
+                title: 'Warm Up',
+                isUnlocked: true,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 10.0),
+                child: Column(
+                  children: <Widget>[
+                    ThinButton(
+                        text: 'Scales',
+                        onThinButtonPressed: () {
+                          log("Pressed Scales button (SelectPage)");
+                        }
+                    ),
+                    ThinButton(
+                        text: 'Chords',
+                        onThinButtonPressed: () {
+                          log("Pressed Chord button (SelectPage)");
+                        }
+                    ),
+                    ThinButton(
+                        text: 'Left Handed Mode',
+                        onThinButtonPressed: () {
+                          log("Pressed left hand mode (selectPage");
+                        }
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
