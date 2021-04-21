@@ -8,7 +8,7 @@ void main() {
   runApp(MyApp());
 }
 
-//Test Alex's Branch
+//Test Alex's Branch LevelSelectionPage(title: 'Scales')
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LevelSelectionPage(title: 'Scales'), //this is just to display for hot reload, home page will be changed,
+      home: MainSelectionPage(), //this is just to display for hot reload, home page will be changed,
       debugShowCheckedModeBanner: false,
     );
   }
@@ -126,3 +126,50 @@ class _LevelSelectionPageState extends State<LevelSelectionPage> {
     );
   }
 }
+
+
+class MainSelectionPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+          title: Text('Welcome Back User!'),
+    ),
+      body: Center(
+        child: ElevatedButton(
+          child: Text('Open another page'),
+          onPressed: (){
+            //navigate to Activity selection page
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ActivitySelectionPage()),
+            );
+          },
+        ),
+
+      ),
+    );
+  }
+}
+
+class ActivitySelectionPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Warm Up'),
+        ),
+        body: Center(
+            child: ElevatedButton(
+              child: Text('Go back to the first page'),
+              onPressed: (){
+                //navigate to another page
+                Navigator.pop(context);
+              },
+            )
+
+        )
+    );
+  }
+}
+
