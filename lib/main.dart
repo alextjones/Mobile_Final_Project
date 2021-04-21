@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'common/thin_button.dart';
+import 'common/top_nav.dart';
 
 void main() {
   runApp(MyApp());
@@ -39,24 +40,9 @@ class _LevelSelectionPageState extends State<LevelSelectionPage> {
     return Scaffold(
       body: ListView(
         children: <Widget>[
-          SizedBox(height: 40.0,),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget> [
-                Container(
-                  height: 50.0,
-                  width: 50.0,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/person_placeholder.png'),
-                    ),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ],
-            ),
+          TopNav(
+            includeBackButton: true,
+            includeProfilePicture: true,
           )
         ]
       ),
