@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'common/level_title.dart';
 import 'common/thin_button.dart';
 import 'common/top_nav.dart';
 
@@ -17,16 +18,17 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LevelSelectionPage(title: 'Scales'),
+      home: LevelSelectionPage(title: 'Scales'), //this is just to display for hot reload, home page will be changed,
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class LevelSelectionPage extends StatefulWidget {
-  LevelSelectionPage({Key key, this.title}) : super(key: key);
+  LevelSelectionPage({Key key, this.title, this.unlockedLevels}) : super(key: key);
 
   final String title;
+  final List<bool> unlockedLevels;
 
   @override
   _LevelSelectionPageState createState() => _LevelSelectionPageState();
@@ -38,13 +40,37 @@ class _LevelSelectionPageState extends State<LevelSelectionPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: ListView(
+      body: Column(
         children: <Widget>[
           TopNav(
             includeBackButton: true,
             includeProfilePicture: true,
-          )
-        ]
+          ),
+          ListView(
+            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 40.0),
+            shrinkWrap: true,
+            children: <Widget>
+            [
+              Text(
+                widget.title,
+                style: TextStyle (
+                  fontSize: 28.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              LevelTitle(
+                title: 'Level 1',
+                isUnlocked: true,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 10.0),
+                child: Column(
+
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

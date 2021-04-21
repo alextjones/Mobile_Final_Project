@@ -25,7 +25,7 @@ class _TopNavState extends State<TopNav> {
       children: <Widget> [
         SizedBox(height: 20.0,),
         Padding(
-          padding: EdgeInsets.fromLTRB(15.0, 0.0, 30.0, 0.0),
+          padding: EdgeInsets.fromLTRB(15.0, 20.0, 30.0, 20.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
