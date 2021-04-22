@@ -1,18 +1,11 @@
 import 'dart:developer';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/services.dart';
 import 'package:audioplayers/audio_cache.dart';
-import 'dart:typed_data';
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'common/level_title.dart';
 import 'common/thin_button.dart';
 import 'common/top_nav.dart';
-import 'dart:io';
 
-import 'package:audiofileplayer/audiofileplayer.dart';
-import 'package:audiofileplayer/audio_system.dart';
 
 void main() {
   runApp(MyApp());
@@ -165,58 +158,28 @@ class _WarmUpPageState extends State<WarmUpPage> {
 
   static AudioCache _cache = new AudioCache();
   AudioPlayer player;
-  String _audioPath;
-  Audio audio;
-
-  String _documentsPath;
-  Audio _documentAudio;
-  bool _documentAudioPlaying = false;
-  String _documentErrorMessage;
+  bool _isPlaying =  false;
 
   @override
   void initState() {
     super.initState();
-    _audioPath = widget.warmUp + ".mp3";
-    //_load();
   }
-/*
-  Future<Null> _load() async {
-    final ByteData data = await rootBundle.load('assets/audio/' + widget.warmUp + '.mp3');
-    Directory tempDir = await getTemporaryDirectory();
-    File tempFile = File('${tempDir.path}/demo.mp3');
-    await tempFile.writeAsBytes(data.buffer.asUint8List(), flush: true);
-    mp3Uri = tempFile.uri.toString();
-    print('finished loading, uri=$mp3Uri');
-  }
- */
 
-  void _playSound(){
+
+  void _playSound() async {
     log("In play sound");
-    // player = await _cache.play("e_minor_pentatonic.mp3");
-    //
-    // setState(() {
-    //
-    // });
-    Audio.load('assets/e_minor_pentatonic.wav')..play()..dispose();
-  }
+    if (_isPlaying)
+      player.stop();
+    else
+      player = await _cache.play(widget.warmUp + '.mp3');
 
-  void _getDirect() async {
-    Directory directory = await getExternalStorageDirectory();
-    setState(() => _documentsPath = directory.path);
-    log(_documentsPath);
-  }
-
-  void _loadDocumentPathAudio() async {
-    final Directory directory = await getExternalStorageDirectory();
-    setState(() => _documentsPath = directory.path);
-
-    _documentAudio = Audio.loadFromAbsolutePath(
-        '$_documentsPath${Platform.pathSeparator}foo.mp3',
-        onComplete: () => setState(() => _documentAudioPlaying = false),
-        onError: (String message) => setState(() {
-          _documentErrorMessage = message;
-          _documentAudio.dispose();
-        }));
+    setState(() {
+      if (_isPlaying)
+        _isPlaying = false;
+      else {
+        _isPlaying = true;
+      }
+    });
   }
 
   @override
@@ -258,7 +221,9 @@ class _WarmUpPageState extends State<WarmUpPage> {
                       IconButton(
                           padding: EdgeInsets.all(0),
                           iconSize: 40,
-                          icon: Icon(Icons.play_circle_outline),
+                          icon: Icon(
+                              _isPlaying? Icons.stop_circle_outlined : Icons.play_circle_outline
+                          ),
                           onPressed: _playSound,
                         ),
                       Text(
