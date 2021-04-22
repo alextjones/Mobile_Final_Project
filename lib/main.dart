@@ -1,10 +1,10 @@
 import 'dart:developer';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/services.dart';
-import 'package:audioplayer/audioplayer.dart';
+import 'package:audioplayers/audio_cache.dart';
 import 'dart:typed_data';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'common/level_title.dart';
 import 'common/thin_button.dart';
@@ -160,17 +160,17 @@ class WarmUpPage extends StatefulWidget {
 
 class _WarmUpPageState extends State<WarmUpPage> {
 
-  AudioPlayer audioPlugin = AudioPlayer();
-  String mp3Uri;
-
-
+  static AudioCache _cache = new AudioCache();
+  AudioPlayer player;
+  String _audioPath;
 
   @override
   void initState() {
     super.initState();
-    _load();
+    _audioPath = widget.warmUp + ".mp3";
+    //_load();
   }
-
+/*
   Future<Null> _load() async {
     final ByteData data = await rootBundle.load('assets/audio/' + widget.warmUp + '.mp3');
     Directory tempDir = await getTemporaryDirectory();
@@ -179,12 +179,15 @@ class _WarmUpPageState extends State<WarmUpPage> {
     mp3Uri = tempFile.uri.toString();
     print('finished loading, uri=$mp3Uri');
   }
+ */
 
-  void _playSound() {
+  void _playSound() async {
     log("In play sound");
-    if (mp3Uri != null) {
-      audioPlugin.play(mp3Uri, isLocal: true);
-    }
+    player = await _cache.play("e_minor_pentatonic.mp3");
+
+    setState(() {
+
+    });
   }
 
   @override
