@@ -1,11 +1,11 @@
 import 'dart:developer';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:audioplayers/audio_cache.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'common/level_title.dart';
 import 'common/thin_button.dart';
 import 'common/top_nav.dart';
-
 
 void main() {
   runApp(MyApp());
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         disabledColor: Colors.black12,
       ),
-      home: LevelSelectionPage(title: "Scales"), //this is just to display for hot reload, home page will be changed,
+      home: MainSelectionPage(), //this is just to display for hot reload, home page will be changed,
       debugShowCheckedModeBanner: false,
     );
   }
@@ -39,10 +39,6 @@ class LevelSelectionPage extends StatefulWidget {
 }
 
 class _LevelSelectionPageState extends State<LevelSelectionPage> {
-
-  void goToWarmup(String warmupTitle) {
-    log("going to " + warmupTitle);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -269,3 +265,156 @@ class _WarmUpPageState extends State<WarmUpPage> {
     );
   }
 }
+
+
+class MainSelectionPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: <Widget>[
+          TopNav(
+            includeBackButton: false,
+            includeProfilePicture: true,
+          ),
+          ListView(
+            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 40.0),
+            shrinkWrap: true,
+            children: <Widget>
+            [
+
+              Text(
+                "Welcome to Fretless!",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 30,
+                ),
+              ),
+              SizedBox(
+                height:20,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 10.0),
+                child: Column(
+                  children: <Widget>[
+
+                    RaisedButton(
+                        child: Text('Warm Up'),
+                        padding: EdgeInsets.fromLTRB(78, 40, 78, 40),
+                        color: Colors.blueAccent,
+                        onPressed: () {
+                          log("Pressed Warm up button (MainPage)");
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ActivitySelectionPage()),
+                          );
+                        }
+                    ),
+                    SizedBox(
+                      height:20,
+                    ),
+                    RaisedButton(
+                        child: Text('Tuner'),
+                        padding: EdgeInsets.fromLTRB(89, 40, 89, 40),
+                        color: Colors.blueAccent,
+                        onPressed: () {
+                          log("Pressed Tune button (MainPage)");
+                        }
+                    ),
+                    SizedBox(
+                      height:20,
+                    ),
+                    RaisedButton(
+                        child: Text('Metronome'),
+                        padding: EdgeInsets.fromLTRB(70, 40, 70, 40),
+                        color: Colors.blueAccent,
+                        onPressed: () {
+                          log("Pressed Metronome button (MainPage)");
+                        }
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ActivitySelectionPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: <Widget>[
+          TopNav(
+            includeBackButton: true,
+            includeProfilePicture: true,
+          ),
+          ListView(
+            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 40.0),
+            shrinkWrap: true,
+            children: <Widget>
+            [
+
+              Text(
+                "Warm Up",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 30,
+                ),
+              ),
+              SizedBox(
+                height:20,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 10.0),
+                child: Column(
+                  children: <Widget>[
+                    RaisedButton(
+                        child: Text('Scales'),
+                        padding: EdgeInsets.fromLTRB(85, 40, 85, 40),
+                        color: Colors.blueAccent,
+                        onPressed: () {
+                          log("Pressed Scales button (SelectPage)");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => LevelSelectionPage(title: "Scales")),
+                          );
+                        }
+                    ),
+                    SizedBox(
+                      height:20,
+                    ),
+                    RaisedButton(
+                        child: Text('Chords'),
+                        padding: EdgeInsets.fromLTRB(85, 40, 85, 40),
+                        color: Colors.blueAccent,
+                        onPressed: () {
+                          log("Pressed Chord button (SelectPage)");
+                        }
+                    ),
+                    SizedBox(
+                      height:20,
+                    ),
+                    RaisedButton(
+                        child: Text('Left Handed Mode'),
+                        padding: EdgeInsets.fromLTRB(45, 40, 45, 40),
+                        color: Colors.blueAccent,
+                        onPressed: () {
+                          log("Pressed left hand mode (selectPage");
+                        }
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
