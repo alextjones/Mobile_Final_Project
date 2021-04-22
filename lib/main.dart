@@ -11,6 +11,9 @@ import 'common/thin_button.dart';
 import 'common/top_nav.dart';
 import 'dart:io';
 
+import 'package:audiofileplayer/audiofileplayer.dart';
+import 'package:audiofileplayer/audio_system.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -163,6 +166,12 @@ class _WarmUpPageState extends State<WarmUpPage> {
   static AudioCache _cache = new AudioCache();
   AudioPlayer player;
   String _audioPath;
+  Audio audio;
+
+  String _documentsPath;
+  Audio _documentAudio;
+  bool _documentAudioPlaying = false;
+  String _documentErrorMessage;
 
   @override
   void initState() {
@@ -181,13 +190,33 @@ class _WarmUpPageState extends State<WarmUpPage> {
   }
  */
 
-  void _playSound() async {
+  void _playSound(){
     log("In play sound");
-    player = await _cache.play("e_minor_pentatonic.mp3");
+    // player = await _cache.play("e_minor_pentatonic.mp3");
+    //
+    // setState(() {
+    //
+    // });
+    Audio.load('assets/e_minor_pentatonic.wav')..play()..dispose();
+  }
 
-    setState(() {
+  void _getDirect() async {
+    Directory directory = await getExternalStorageDirectory();
+    setState(() => _documentsPath = directory.path);
+    log(_documentsPath);
+  }
 
-    });
+  void _loadDocumentPathAudio() async {
+    final Directory directory = await getExternalStorageDirectory();
+    setState(() => _documentsPath = directory.path);
+
+    _documentAudio = Audio.loadFromAbsolutePath(
+        '$_documentsPath${Platform.pathSeparator}foo.mp3',
+        onComplete: () => setState(() => _documentAudioPlaying = false),
+        onError: (String message) => setState(() {
+          _documentErrorMessage = message;
+          _documentAudio.dispose();
+        }));
   }
 
   @override
@@ -214,7 +243,7 @@ class _WarmUpPageState extends State<WarmUpPage> {
                   height: 20,
                 ),
                 Image.asset(
-                  'assets/images/a_minor_pentatonic.jpg',
+                  'assets/images/' + widget.warmUp  + '.jpg',
                   width: 300,
                 ),
                 SizedBox(
