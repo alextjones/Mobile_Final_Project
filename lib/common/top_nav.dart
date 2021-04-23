@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 
-class TopNav extends StatefulWidget {
+class TopNav extends StatelessWidget{
 
   final bool includeProfilePicture;
   final bool includeBackButton;
   final String profilePicturePath;
+  final VoidCallback onPop;
 
   TopNav({
     Key key,
     @required this.includeBackButton,
     @required this.includeProfilePicture,
+    this.onPop,
     this.profilePicturePath = 'assets/images/person_placeholder.png',
   }) : super(key: key);
-
-  _TopNavState createState() => _TopNavState();
-
-}
-
-class _TopNavState extends State<TopNav> {
 
   @override
   Widget build(BuildContext context) {
@@ -31,17 +27,21 @@ class _TopNavState extends State<TopNav> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget> [
               Visibility(
-                visible: widget.includeBackButton,
+                visible: includeBackButton,
                 child: IconButton(
                   icon: Icon(
                       Icons.chevron_left_rounded,
                     size: 30.0,
                   ),
-                  onPressed: () { Navigator.pop(context); },
+                  onPressed: () {
+                    if (onPop != null)
+                      onPop();
+                    Navigator.pop(context);
+                    },
                 ),
               ),
               Visibility(
-                visible: widget.includeProfilePicture,
+                visible: includeProfilePicture,
                 child: Container(
                   height: 40.0,
                   width: 40.0,

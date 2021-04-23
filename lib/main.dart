@@ -245,9 +245,9 @@ class ActivitySelectionPage extends StatelessWidget {
                       height:20,
                     ),
                     ThickButton(
-                        text: 'Left Hand',
+                        text: 'Right Hand',
                         onThickButtonPressed:() {
-                          log("Pressed Left Hand button ");
+                          log("Pressed Right Hand button ");
                         }
                     ),
                   ],
@@ -326,7 +326,7 @@ class _LevelSelectionPageState extends State<LevelSelectionPage> {
                         onThinButtonPressed: () {
                           Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => WarmUpPage(warmUp: 'a_minor_pentatonic', title: 'A Minor Pentatonic', bpm:65))
+                              MaterialPageRoute(builder: (context) => WarmUpPage(warmUp: 'd_minor_pentatonic', title: 'A Minor Pentatonic', bpm:65))
                           );
                         }
                     ),
@@ -394,13 +394,12 @@ class _WarmUpPageState extends State<WarmUpPage> {
     super.initState();
   }
 
-
   void _playSound() async {
     log("In play sound");
     if (_isPlaying)
       player.stop();
     else
-      player = await _cache.play(widget.warmUp + '.mp3');
+      player = await _cache.loop(widget.warmUp + '.mp3');
 
     setState(() {
       if (_isPlaying)
@@ -411,6 +410,11 @@ class _WarmUpPageState extends State<WarmUpPage> {
     });
   }
 
+  void _stopSound() async {
+    if (_isPlaying)
+      player.stop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -419,6 +423,7 @@ class _WarmUpPageState extends State<WarmUpPage> {
           TopNav(
             includeProfilePicture: false,
             includeBackButton: true,
+            onPop: _stopSound,
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
