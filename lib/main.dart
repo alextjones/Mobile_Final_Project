@@ -6,6 +6,7 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'common/level_title.dart';
+import 'common/thick_button.dart';
 import 'common/thin_button.dart';
 import 'common/top_nav.dart';
 
@@ -61,16 +62,16 @@ class _MainSelectionPageState extends State<MainSelectionPage>{
             shrinkWrap: true,
             children: <Widget>
             [
-
               Text(
                 "Fretless",
                 textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 30,
+                style: TextStyle (
+                  fontSize: 28.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(
-                height:20,
+                height: 20,
               ),
 
               Text(
@@ -99,38 +100,33 @@ class _MainSelectionPageState extends State<MainSelectionPage>{
                 child: Column(
                   children: <Widget>[
 
-                    RaisedButton(
-                        child: Text('Warm Up'),
-                        padding: EdgeInsets.fromLTRB(78, 40, 78, 40),
-                        color: Colors.blueAccent,
-                        onPressed: () {
+                    ThickButton(
+                        text: 'Warm Up',
+                        onThickButtonPressed:() {
                           log("Pressed Warm up button (MainPage)");
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ActivitySelectionPage()),
+                            MaterialPageRoute(builder: (context) =>
+                                ActivitySelectionPage()),
                           );
                         }
                     ),
                     SizedBox(
                       height:20,
                     ),
-                    RaisedButton(
-                        child: Text('Tuner'),
-                        padding: EdgeInsets.fromLTRB(89, 40, 89, 40),
-                        color: Colors.blueAccent,
-                        onPressed: () {
-                          log("Pressed Tune button (MainPage)");
+                    ThickButton(
+                        text: 'Tuner',
+                        onThickButtonPressed:() {
+                          log("Pressed tuner button");
                         }
                     ),
                     SizedBox(
                       height:20,
                     ),
-                    RaisedButton(
-                        child: Text('Metronome'),
-                        padding: EdgeInsets.fromLTRB(70, 40, 70, 40),
-                        color: Colors.blueAccent,
-                        onPressed: () {
-                          log("Pressed Metronome button (MainPage)");
+                    ThickButton(
+                        text: 'Metronome',
+                        onThickButtonPressed:() {
+                          log("Pressed Metronome button ");
                         }
                     ),
                   ],
@@ -196,53 +192,58 @@ class ActivitySelectionPage extends StatelessWidget {
             shrinkWrap: true,
             children: <Widget>
             [
-
               Text(
                 "Warm Up",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 30,
+                textAlign: TextAlign.left,
+                style: TextStyle (
+                  fontSize: 28.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(
-                height:20,
+                height: 20,
               ),
               Padding(
                 padding: EdgeInsets.only(left: 10.0),
                 child: Column(
                   children: <Widget>[
-                    RaisedButton(
-                        child: Text('Scales'),
-                        padding: EdgeInsets.fromLTRB(85, 40, 85, 40),
-                        color: Colors.blueAccent,
-                        onPressed: () {
-                          log("Pressed Scales button (SelectPage)");
+
+                    ThickButton(
+                        text: 'Scales',
+                        onThickButtonPressed:() {
+                          log("Pressed Warm up button (MainPage)");
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => LevelSelectionPage(title: "Scales")),
+                            MaterialPageRoute(builder: (context) =>
+                                LevelSelectionPage(title: 'Scales')),
                           );
                         }
                     ),
                     SizedBox(
                       height:20,
                     ),
-                    RaisedButton(
-                        child: Text('Chords'),
-                        padding: EdgeInsets.fromLTRB(85, 40, 85, 40),
-                        color: Colors.blueAccent,
-                        onPressed: () {
-                          log("Pressed Chord button (SelectPage)");
+                    ThickButton(
+                        text: 'Chords',
+                        onThickButtonPressed:() {
+                          log("Pressed Chords button");
                         }
                     ),
                     SizedBox(
                       height:20,
                     ),
-                    RaisedButton(
-                        child: Text('Left Handed Mode'),
-                        padding: EdgeInsets.fromLTRB(45, 40, 45, 40),
-                        color: Colors.blueAccent,
-                        onPressed: () {
-                          log("Pressed left hand mode (selectPage");
+                    ThickButton(
+                        text: 'Left Hand',
+                        onThickButtonPressed:() {
+                          log("Pressed Left Hand button ");
+                        }
+                    ),
+                    SizedBox(
+                      height:20,
+                    ),
+                    ThickButton(
+                        text: 'Left Hand',
+                        onThickButtonPressed:() {
+                          log("Pressed Left Hand button ");
                         }
                     ),
                   ],
