@@ -40,7 +40,7 @@ class MainSelectionPage extends StatefulWidget {
 class _MainSelectionPageState extends State<MainSelectionPage>{
 
   var _randomQuote = '';
-  var _quoteAuthor;
+  var _quoteAuthor = '';
 
   @override
   void initState() {
