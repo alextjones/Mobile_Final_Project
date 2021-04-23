@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/foundation.dart';
@@ -24,6 +26,232 @@ class MyApp extends StatelessWidget {
       ),
       home: MainSelectionPage(), //this is just to display for hot reload, home page will be changed,
       debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class MainSelectionPage extends StatefulWidget {
+
+  @override
+  _MainSelectionPageState createState() => _MainSelectionPageState();
+}
+
+class _MainSelectionPageState extends State<MainSelectionPage>{
+
+  var _randomQuote = '';
+  var _quoteAuthor;
+
+  @override
+  void initState() {
+    super.initState();
+    _getRandomQuote();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: <Widget>[
+          TopNav(
+            includeBackButton: false,
+            includeProfilePicture: true,
+          ),
+          ListView(
+            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 40.0),
+            shrinkWrap: true,
+            children: <Widget>
+            [
+
+              Text(
+                "Fretless",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 30,
+                ),
+              ),
+              SizedBox(
+                height:20,
+              ),
+
+              Text(
+                '\"' + _randomQuote + '\"',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 22.4,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+              Text(
+                '-' + _quoteAuthor,
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 17,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 10.0),
+                child: Column(
+                  children: <Widget>[
+
+                    RaisedButton(
+                        child: Text('Warm Up'),
+                        padding: EdgeInsets.fromLTRB(78, 40, 78, 40),
+                        color: Colors.blueAccent,
+                        onPressed: () {
+                          log("Pressed Warm up button (MainPage)");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ActivitySelectionPage()),
+                          );
+                        }
+                    ),
+                    SizedBox(
+                      height:20,
+                    ),
+                    RaisedButton(
+                        child: Text('Tuner'),
+                        padding: EdgeInsets.fromLTRB(89, 40, 89, 40),
+                        color: Colors.blueAccent,
+                        onPressed: () {
+                          log("Pressed Tune button (MainPage)");
+                        }
+                    ),
+                    SizedBox(
+                      height:20,
+                    ),
+                    RaisedButton(
+                        child: Text('Metronome'),
+                        padding: EdgeInsets.fromLTRB(70, 40, 70, 40),
+                        color: Colors.blueAccent,
+                        onPressed: () {
+                          log("Pressed Metronome button (MainPage)");
+                        }
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  /* code from https://rominirani.com/tutorial-flutter-app-powered-by-google-cloud-functions-3eab0df5f957 */
+  _getRandomQuote() async {
+    var url = 'https://northamerica-northeast1-fretless.cloudfunctions.net/getrandomquote-function';
+    var httpClient = new HttpClient();
+
+    String resultQuote = '-';
+    String resultAuthor = '-';
+
+    try {
+      var request = await httpClient.getUrl(Uri.parse(url));
+      var response = await request.close();
+      if (response.statusCode == HttpStatus.OK) {
+        var jsonText = await response.transform(utf8.decoder).join();
+        var data = json.decode(jsonText);
+        resultQuote = data['quote'];
+        resultAuthor = data['person'];
+      } else {
+        log('Error getting a random quote:\nHttp status ${response.statusCode}');
+      }
+    } catch (exception) {
+      log('Failed invoking the getRandomQuote function.' + exception.toString());
+    }
+
+    log("RESULT JSON: " + resultQuote + " by " + resultAuthor);
+
+    // If the widget was removed from the tree while the message was in flight,
+    // we want to discard the reply rather than calling setState to update our
+    // non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      _randomQuote = resultQuote;
+      _quoteAuthor = resultAuthor;
+    });
+  }
+
+}
+
+class ActivitySelectionPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: <Widget>[
+          TopNav(
+            includeBackButton: true,
+            includeProfilePicture: true,
+          ),
+          ListView(
+            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 40.0),
+            shrinkWrap: true,
+            children: <Widget>
+            [
+
+              Text(
+                "Warm Up",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 30,
+                ),
+              ),
+              SizedBox(
+                height:20,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 10.0),
+                child: Column(
+                  children: <Widget>[
+                    RaisedButton(
+                        child: Text('Scales'),
+                        padding: EdgeInsets.fromLTRB(85, 40, 85, 40),
+                        color: Colors.blueAccent,
+                        onPressed: () {
+                          log("Pressed Scales button (SelectPage)");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => LevelSelectionPage(title: "Scales")),
+                          );
+                        }
+                    ),
+                    SizedBox(
+                      height:20,
+                    ),
+                    RaisedButton(
+                        child: Text('Chords'),
+                        padding: EdgeInsets.fromLTRB(85, 40, 85, 40),
+                        color: Colors.blueAccent,
+                        onPressed: () {
+                          log("Pressed Chord button (SelectPage)");
+                        }
+                    ),
+                    SizedBox(
+                      height:20,
+                    ),
+                    RaisedButton(
+                        child: Text('Left Handed Mode'),
+                        padding: EdgeInsets.fromLTRB(45, 40, 45, 40),
+                        color: Colors.blueAccent,
+                        onPressed: () {
+                          log("Pressed left hand mode (selectPage");
+                        }
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -267,154 +495,6 @@ class _WarmUpPageState extends State<WarmUpPage> {
 }
 
 
-class MainSelectionPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: <Widget>[
-          TopNav(
-            includeBackButton: false,
-            includeProfilePicture: true,
-          ),
-          ListView(
-            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 40.0),
-            shrinkWrap: true,
-            children: <Widget>
-            [
 
-              Text(
-                "Welcome to Fretless!",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 30,
-                ),
-              ),
-              SizedBox(
-                height:20,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Column(
-                  children: <Widget>[
 
-                    RaisedButton(
-                        child: Text('Warm Up'),
-                        padding: EdgeInsets.fromLTRB(78, 40, 78, 40),
-                        color: Colors.blueAccent,
-                        onPressed: () {
-                          log("Pressed Warm up button (MainPage)");
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => ActivitySelectionPage()),
-                          );
-                        }
-                    ),
-                    SizedBox(
-                      height:20,
-                    ),
-                    RaisedButton(
-                        child: Text('Tuner'),
-                        padding: EdgeInsets.fromLTRB(89, 40, 89, 40),
-                        color: Colors.blueAccent,
-                        onPressed: () {
-                          log("Pressed Tune button (MainPage)");
-                        }
-                    ),
-                    SizedBox(
-                      height:20,
-                    ),
-                    RaisedButton(
-                        child: Text('Metronome'),
-                        padding: EdgeInsets.fromLTRB(70, 40, 70, 40),
-                        color: Colors.blueAccent,
-                        onPressed: () {
-                          log("Pressed Metronome button (MainPage)");
-                        }
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ActivitySelectionPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: <Widget>[
-          TopNav(
-            includeBackButton: true,
-            includeProfilePicture: true,
-          ),
-          ListView(
-            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 40.0),
-            shrinkWrap: true,
-            children: <Widget>
-            [
-
-              Text(
-                "Warm Up",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 30,
-                ),
-              ),
-              SizedBox(
-                height:20,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Column(
-                  children: <Widget>[
-                    RaisedButton(
-                        child: Text('Scales'),
-                        padding: EdgeInsets.fromLTRB(85, 40, 85, 40),
-                        color: Colors.blueAccent,
-                        onPressed: () {
-                          log("Pressed Scales button (SelectPage)");
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => LevelSelectionPage(title: "Scales")),
-                          );
-                        }
-                    ),
-                    SizedBox(
-                      height:20,
-                    ),
-                    RaisedButton(
-                        child: Text('Chords'),
-                        padding: EdgeInsets.fromLTRB(85, 40, 85, 40),
-                        color: Colors.blueAccent,
-                        onPressed: () {
-                          log("Pressed Chord button (SelectPage)");
-                        }
-                    ),
-                    SizedBox(
-                      height:20,
-                    ),
-                    RaisedButton(
-                        child: Text('Left Handed Mode'),
-                        padding: EdgeInsets.fromLTRB(45, 40, 45, 40),
-                        color: Colors.blueAccent,
-                        onPressed: () {
-                          log("Pressed left hand mode (selectPage");
-                        }
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
 
