@@ -50,6 +50,7 @@ class _MainSelectionPageState extends State<MainSelectionPage>{
 
   @override
   Widget build(BuildContext context) {
+    log ("build main");
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -102,13 +103,16 @@ class _MainSelectionPageState extends State<MainSelectionPage>{
 
                     ThickButton(
                         text: 'Warm Up',
-                        onThickButtonPressed:() {
-                          log("Pressed Warm up button (MainPage)");
-                          Navigator.push(
+                        onThickButtonPressed: () async {
+                          final value = await Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) =>
-                                ActivitySelectionPage()),
+                            MaterialPageRoute(
+                            builder: (context) => ActivitySelectionPage(),
+                            ),
                           );
+                          setState(() {
+                            _getRandomQuote();
+                          });
                         }
                     ),
                     SizedBox(
